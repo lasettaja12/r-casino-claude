@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Freedom Casino</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="frame hidden" id="frame">
+  <div class="win">
+    <header class="head">
+      <img class="logo" src="img/logo.png" alt="Freedom Casino">
+      <span class="sep"></span>
+
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="cases" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg><span>Cases</span></button>
+        <button class="tab" data-tab="coinflip" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M15.5 9.2A6 6 0 1 1 9.2 15.5"/></svg><span>Coinflip</span></button>
+        <button class="tab" data-tab="mines" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="14" r="7"/><path d="m15.5 8.5 2-2M17 4l1.5 1.5M20 5h1"/></svg><span>Mines</span></button>
+        <button class="tab" data-tab="crash" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><span>Crash</span></button>
+        <button class="tab" data-tab="plinko" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span>Plinko</span></button>
+        <button class="tab" data-tab="blackjack" role="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3c3 4 7 6 7 10a4 4 0 0 1-7 2.6A4 4 0 0 1 5 13c0-4 4-6 7-10z"/><path d="M12 15.6 10.5 21h3z"/></svg><span>Blackjack</span></button>
+      </nav>
+
+      <div class="right">
+        <div class="bal"><span id="bal">0</span><span class="coin"></span></div>
+        <button class="ibtn" id="btnHistory" aria-label="Game history" data-tip="Game history">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></button>
+        <button class="ibtn" id="btnInv" aria-label="Case winnings" data-tip="Case winnings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 7h14l-1 13H6z"/><path d="M9 7a3 3 0 0 1 6 0"/><path d="M9 11h.01M15 11h.01"/></svg></button>
+        <button class="ibtn" id="btnClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+    </header>
+
+    <main class="body">
+
+      <!-- case list -->
+      <section class="view pad" id="v-cases"><div class="grid" id="caseGrid"></div></section>
+
+      <!-- case detail -->
+      <section class="view" id="v-case" hidden>
+        <div class="game">
+          <aside class="side cd-side">
+            <button class="back" id="cdBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+            <div class="cd-art"><img src="img/case.png" alt=""></div>
+            <div class="price-box"><span class="lbl">Price</span><span class="price" id="cdPrice"></span></div>
+            <button class="main-btn" id="cdOpen">Open case</button>
+          </aside>
+          <div class="cd-main">
+            <h2 id="cdTitle"></h2>
+            <div class="lbl">Contains</div>
+            <div class="items" id="cdItems"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- coinflip -->
+      <section class="view" id="v-coinflip" hidden>
+        <div class="game">
+          <aside class="side" data-game="coinflip">
+            <div class="betbox"></div>
+            <div class="lbl">Last games</div>
+            <div class="hist" id="h-coinflip"></div>
+            <button class="main-btn" id="cfPlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M7 4v16l13-8z"/></svg>Play</button>
+          </aside>
+          <div class="stage">
+            <div class="cf">
+              <div class="flip" id="cfCoin">
+                <img class="face" src="img/coin.png" alt="">
+                <div class="face back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></div>
+              </div>
+              <div class="cap" id="cfCap"></div>
+              <div class="res" id="cfRes"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- mines -->
+      <section class="view" id="v-mines" hidden>
+        <div class="game">
+          <aside class="side" data-game="mines">
+            <div class="betbox"></div>
+            <div class="lbl">Mines<b id="mnCount">3</b></div>
+            <input type="range" id="mnRange" min="1" max="24" value="3" aria-label="Mines">
+            <div class="duo">
+              <div class="box"><span class="lbl">Multiplier</span><b class="purple" id="mnMult">1.00x</b></div>
+              <div class="box"><span class="lbl">Profit</span><b id="mnProfit">0</b></div>
+            </div>
+            <div class="lbl">Last games</div>
+            <div class="hist" id="h-mines"></div>
+            <button class="main-btn" id="mnBtn">Start game</button>
+          </aside>
+          <div class="stage"><div class="mgrid" id="mnGrid"></div></div>
+        </div>
+      </section>
+
+      <!-- crash -->
+      <section class="view" id="v-crash" hidden>
+        <div class="game">
+          <aside class="side" data-game="crash">
+            <div class="betbox"></div>
+            <div class="lbl">Auto cash out</div>
+            <label class="field"><span class="x">x</span><input id="crAuto" value="2.5" inputmode="decimal" aria-label="Auto cash out"></label>
+            <div class="lbl">Last games</div>
+            <div class="hist" id="h-crash"></div>
+            <button class="main-btn" id="crBtn"></button>
+          </aside>
+          <div class="stage">
+            <div class="crash">
+              <div class="pills" id="crPills"></div>
+              <div class="chart">
+                <canvas id="crCv"></canvas>
+                <div class="cx"><b id="crM">1.00x</b><span id="crSub" class="idle">Place a bet to start the round</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- plinko -->
+      <section class="view" id="v-plinko" hidden>
+        <div class="game">
+          <aside class="side" data-game="plinko">
+            <div class="betbox"></div>
+            <div class="lbl">Risk</div>
+            <div class="seg" id="plRisk">
+              <button class="qb" data-v="low">Low</button><button class="qb" data-v="medium">Medium</button><button class="qb on" data-v="high">High</button>
+            </div>
+            <div class="lbl">Rows</div>
+            <div class="seg" id="plRows">
+              <button class="qb" data-v="8">8</button><button class="qb" data-v="10">10</button><button class="qb on" data-v="12">12</button>
+            </div>
+            <div class="lbl">Last games</div>
+            <div class="hist" id="h-plinko"></div>
+            <button class="main-btn" id="plBtn">Drop ball</button>
+          </aside>
+          <div class="stage"><canvas class="pcv" id="plCv"></canvas></div>
+        </div>
+      </section>
+
+      <!-- blackjack -->
+      <section class="view" id="v-blackjack" hidden>
+        <div class="game">
+          <aside class="side" data-game="blackjack">
+            <div class="betbox"></div>
+            <div class="lbl">Last games</div>
+            <div class="hist" id="h-blackjack"></div>
+            <div id="bjActs"></div>
+          </aside>
+          <div class="stage">
+            <img class="deck" src="img/cardback.png" alt="">
+            <div class="bj" id="bjTable" hidden>
+              <div class="hand"><div class="who">Dealer <i id="bjDs"></i></div><div class="cards" id="bjDc"></div></div>
+              <div class="bj-res" id="bjRes"></div>
+              <div class="hand"><div class="who">You <i id="bjPs"></i></div><div class="cards" id="bjPc"></div></div>
+            </div>
+            <div class="bj-empty" id="bjEmpty">Set your bet and deal a hand</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- history -->
+      <section class="view pad" id="v-history" hidden>
+        <div class="tiles" id="hsTiles"></div>
+        <div class="filters" id="hsFilters"></div>
+        <div class="hlist" id="hsList"></div>
+      </section>
+
+      <!-- case opening -->
+      <div class="reel-ov" id="reelOv" hidden>
+        <div class="rwrap"><div class="rline"></div><div class="rwin"><div class="strip" id="strip"></div></div></div>
+        <div id="wonBox"></div>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" hidden></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
